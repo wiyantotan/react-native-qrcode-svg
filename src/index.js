@@ -68,7 +68,7 @@ const renderLogo = ({
 }
 
 const QRCode = ({
-                  value = '',
+                  value = '-',
                   size = 100,
                   color = 'black',
                   backgroundColor = 'white',
