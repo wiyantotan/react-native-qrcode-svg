@@ -110,10 +110,10 @@ const QRCode = ({
         -quietZone,
         -quietZone,
         size + quietZone * 2,
-        size + quietZone * 2
+        size + 10 + quietZone * 2
       ].join(' ')}
       width={size}
-      height={size}
+      height={size+10+quietZone}
     >
       <Defs>
         <LinearGradient
@@ -152,6 +152,16 @@ const QRCode = ({
           logoMargin,
           logoBorderRadius
         })}
+        <G>
+          <Rect
+            x={-quietZone}
+            y={size}
+            width={size + quietZone * 2}
+            height={10+quietZone}
+            fill={'#fff'}
+          />
+          <Text x={size/2} y={size+quietZone} fontSize={14} fill={'#000'}>{value}</Text>
+        </G>
     </Svg>
   )
 }
