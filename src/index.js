@@ -7,19 +7,20 @@ import Svg, {
   Image,
   ClipPath,
   LinearGradient,
+  Text,
   Stop
 } from 'react-native-svg'
 import genMatrix from './genMatrix'
 import transformMatrixIntoPath from './transformMatrixIntoPath'
 
 const renderLogo = ({
-  size,
-  logo,
-  logoSize,
-  logoBackgroundColor,
-  logoMargin,
-  logoBorderRadius
-}) => {
+                      size,
+                      logo,
+                      logoSize,
+                      logoBackgroundColor,
+                      logoMargin,
+                      logoBorderRadius
+                    }) => {
   const logoPosition = (size - logoSize - logoMargin * 2) / 2
   const logoBackgroundSize = logoSize + logoMargin * 2
   const logoBackgroundBorderRadius =
@@ -67,23 +68,24 @@ const renderLogo = ({
 }
 
 const QRCode = ({
-  value = 'this is a QR code',
-  size = 100,
-  color = 'black',
-  backgroundColor = 'white',
-  logo,
-  logoSize = size * 0.2,
-  logoBackgroundColor = 'transparent',
-  logoMargin = 2,
-  logoBorderRadius = 0,
-  quietZone = 0,
-  enableLinearGradient = false,
-  gradientDirection = ['0%', '0%', '100%', '100%'],
-  linearGradient = ['rgb(255,0,0)', 'rgb(0,255,255)'],
-  ecl = 'M',
-  getRef,
-  onError
-}) => {
+                  value = '',
+                  size = 100,
+                  color = 'black',
+                  backgroundColor = 'white',
+                  logo,
+                  logoSize = size * 0.2,
+                  logoBackgroundColor = 'transparent',
+                  logoMargin = 2,
+                  logoBorderRadius = 0,
+                  quietZone = 0,
+                  fontStyle={},
+                  enableLinearGradient = false,
+                  gradientDirection = ['0%', '0%', '100%', '100%'],
+                  linearGradient = ['rgb(255,0,0)', 'rgb(0,255,255)'],
+                  ecl = 'M',
+                  getRef,
+                  onError
+                }) => {
   const result = useMemo(() => {
     try {
       return transformMatrixIntoPath(genMatrix(value, ecl), size)
@@ -110,7 +112,7 @@ const QRCode = ({
         -quietZone,
         -quietZone,
         size + quietZone * 2,
-        size + 10 + quietZone * 2
+        size + 10 + quietZone * 3
       ].join(' ')}
       width={size}
       height={size+10+quietZone}
@@ -144,24 +146,24 @@ const QRCode = ({
         />
       </G>
       {logo &&
-        renderLogo({
-          size,
-          logo,
-          logoSize,
-          logoBackgroundColor,
-          logoMargin,
-          logoBorderRadius
-        })}
-        <G>
-          <Rect
-            x={-quietZone}
-            y={size}
-            width={size + quietZone * 2}
-            height={10+quietZone}
-            fill={'#fff'}
-          />
-          <Text x={size/2} y={size+quietZone} fontSize={14} fill={'#000'}>{value}</Text>
-        </G>
+      renderLogo({
+        size,
+        logo,
+        logoSize,
+        logoBackgroundColor,
+        logoMargin,
+        logoBorderRadius
+      })}
+      <G>
+        <Rect
+          x={-quietZone}
+          y={size+quietZone-1}
+          width={size + quietZone * 2}
+          height={10+quietZone+5}
+          fill={'#fff'}
+        />
+        <Text x={size/2} y={size+quietZone+10} {...fontStyle} width={size} fill={'#000'} textAnchor={'middle'}>{value}</Text>
+      </G>
     </Svg>
   )
 }
